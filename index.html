@@ -52,8 +52,8 @@
             
             #bars{
               float: right;
-              width: 1300px; 
-              height: 650px;
+              width: 1000px; 
+              height: 500px;
             }
             
             #bars1{
@@ -92,7 +92,7 @@
             <div id="contents" width="200" height="1000"></div>
             </div>
         
-            <div id="bars" width="1200" height="1200">
+            <div id="bars" width="1000" height="1000">
                 <svg id="bars1"></svg>
                 <svg id="bars2"></svg>
             </div>    
@@ -846,8 +846,8 @@
             var data2=data.aggregations.TopWords.buckets;
             //console.log(data2[0].doc_count);
             
-            svg_width=600;
-            svg_height=600;
+            svg_width=460;
+            svg_height=460;
             height_bar=svg_height/data2.length;
             label_width=50;
             
@@ -906,8 +906,8 @@
             var data2=data.aggregations.TopWords.buckets;
             //console.log(data2[0].doc_count);
             
-            svg_width=600;
-            svg_height=600;
+            svg_width=460;
+            svg_height=460;
             height_bar=svg_height/data2.length;
             label_width=50;
             
@@ -959,15 +959,15 @@
         var interval = setInterval(function() {
             console.log("calling");
             
-            d3.json("http://vgc.poly.edu/projects/r2sense/twitter3/_search")
+            d3.json("http://vgc.poly.edu/projects/es-gateway/twitter/_search")
             .header("Content-Type", "application/json")
             .post(JSON.stringify(query), liveData);
 
-            d3.json("http://vgc.poly.edu/projects/r2sense/twitter3/_search")
+            d3.json("http://vgc.poly.edu/projects/es-gateway/twitter/_search")
                 .header("Content-Type", "application/json")
                 .post(JSON.stringify(countWords), countData);
 
-            d3.json("http://vgc.poly.edu/projects/r2sense/twitter3/_search")
+            d3.json("http://vgc.poly.edu/projects/es-gateway/twitter/_search")
                 .header("Content-Type", "application/json")
                 .post(JSON.stringify(significantWords), significantData);
             }, 10000)
