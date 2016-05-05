@@ -84,6 +84,12 @@
 
     <body>
         <h1>TwitterNow</h1>
+        <label>Search Terms: </label>
+            <input type="text" id="textInput"/>
+            <button type="button" onclick="startSearch();">Twitterify</button>
+        <label>Add terms seperated by semicolon (;) </label>
+        <label>Current Terms: </label>
+        <label id="currentTerms"></label>
         
         <hr>
         <div >
@@ -775,11 +781,25 @@
     "zero"];
     </script>
     
+    <script>
+        function startSearch() {
+        //console.log(countWords);
+        var searchText=document.getElementById("textInput").value;
+        var keywordArray=searchText.split(';');  
+        countWords.query.terms.text= keywordArray;
+        significantWords.query.terms.text= keywordArray; 
+        //console.log(countWords);
+        document.getElementById("textInput").value="";
+        document.getElementById("currentTerms").innerHTML=keywordArray;
+            
+    }
+    </script>
+    
     
     <script>
         
         var query = {
-        size: 100,
+        size: 1,
         sort: [
           {"created_at" : {"order" : "desc"}}
        ]
@@ -787,7 +807,7 @@
     
         var countWords = {
             "query": {
-                 "terms" : { "text" : ["love", "amazing"]}  
+                 "terms" : { "text" : ["amazing","love"]}  
             },
             "aggs": {
                 "TopWords": {
@@ -803,7 +823,7 @@
 
         var significantWords = {
             "query": {
-                 "terms" : { "text" : ["love", "amazing"]}  
+                 "terms" : { "text" : ["amazing","love"]}  
             },
             "aggs": {
                 "TopWords": {
@@ -841,7 +861,8 @@
         
         
         function countData(error, data) {
-            console.log(data.aggregations.TopWords.buckets);
+            //console.log(countWords);
+            //console.log(data.aggregations.TopWords.buckets);
             
             var data2=data.aggregations.TopWords.buckets;
             //console.log(data2[0].doc_count);
@@ -901,7 +922,7 @@
         }
         
         function significantData(error, data) {
-            console.log(data.aggregations.TopWords.buckets);
+            //console.log(data.aggregations.TopWords.buckets);
             
             var data2=data.aggregations.TopWords.buckets;
             //console.log(data2[0].doc_count);
