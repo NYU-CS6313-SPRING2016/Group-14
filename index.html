@@ -903,7 +903,7 @@
             svg_width=460;
             svg_height=460;
             height_bar=svg_height/data2.length;
-            label_width=100;
+            label_width=50;
             
             var chart = d3.select("#bars1")
             .attr("width", svg_width)
@@ -944,7 +944,8 @@
             //.attr("dy", "1em") // vertical-align: middle
             .attr("text-anchor", "end") // text-align: right
             .text(function(d) { return d.key; })
-            .style("fill", "#000000");
+            .style("fill", "#000000")
+            .style("font-size","10px");
             
             
             bar_graph.exit().remove();
@@ -963,7 +964,7 @@
             svg_width=460;
             svg_height=460;
             height_bar=svg_height/data2.length;
-            label_width=100;
+            label_width=50;
             
             var chart = d3.select("#bars2")
             .attr("width", svg_width)
@@ -1004,7 +1005,8 @@
             //.attr("dy", "1em") // vertical-align: middle
             .attr("text-anchor", "end") // text-align: right
             .text(function(d) { return d.key; })
-            .style("fill", "#000000");
+            .style("fill", "#000000")
+            .style("font-size","10px");
             
             
             bar_graph.exit().remove();
