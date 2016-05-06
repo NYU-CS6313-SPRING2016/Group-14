@@ -43,8 +43,23 @@
                 
             }
             
+            #main_div{  
+               width: 1500px; 
+              height: 710px; 
+              border:1px solid black;
+                overflow:auto;
+            }
+            
+            #live_tweets{
+              float: left;  
+               width: 300px; 
+              height: 700px; 
+              border:1px solid black;
+                overflow:auto;
+            }
+            
             #contents{
-              float: left; 
+               
               width: 300px; 
               height: 650px;
                 overflow:auto;
@@ -52,12 +67,11 @@
             
             #bars{
               float: right;
-              width: 1000px; 
+              width: 1100px; 
               height: 500px;
             }
             
             #bars1{
-              float: left;
                 margin-top: 20px;  
                 margin-right: 20px;  
                 margin-bottom: 20px;  
@@ -65,12 +79,23 @@
             }
             
             #bars2{
-              float: right;
                 margin-top: 20px;  
                 margin-right: 20px;  
                 margin-bottom: 20px;  
                 margin-left: 20px;
             }
+            
+            #bars1_div{
+              float: left;
+                
+            }
+            
+            #bars2_div{
+              float: right;
+                
+            }
+            
+            
             
             #bars rect {
                 fill: steelblue;
@@ -92,15 +117,21 @@
         <label id="currentTerms"></label>
         
         <hr>
-        <div >
-            <div >
+        <div id="main_div">
+            <div id="live_tweets">
                <h2>Live Tweets</h2> 
             <div id="contents" width="200" height="1000"></div>
             </div>
         
             <div id="bars" width="1000" height="1000">
+                <div id="bars1_div">
+                    <h2>Frequency</h2>
                 <svg id="bars1"></svg>
+                </div>
+                <div id="bars2_div">
+                    <h2>Significance</h2>
                 <svg id="bars2"></svg>
+                </div>
             </div>    
         
         </div>
@@ -112,6 +143,8 @@
     var stopWords = ["a",
     "1","2","3","4","5","6","7","8", "9", "0",
     "able",
+    "t.co",
+    "https",
      "t",
      "@",
     "i'm",
@@ -870,7 +903,7 @@
             svg_width=460;
             svg_height=460;
             height_bar=svg_height/data2.length;
-            label_width=50;
+            label_width=100;
             
             var chart = d3.select("#bars1")
             .attr("width", svg_width)
@@ -930,7 +963,7 @@
             svg_width=460;
             svg_height=460;
             height_bar=svg_height/data2.length;
-            label_width=50;
+            label_width=100;
             
             var chart = d3.select("#bars2")
             .attr("width", svg_width)
