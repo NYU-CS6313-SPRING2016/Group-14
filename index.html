@@ -1,7 +1,7 @@
 <html>
 
     <head>
-        <title>TwitterNow</title>
+        <title>Twitter Vocabulary Builder</title>
         <style>
             
             body {
@@ -821,6 +821,7 @@
         var keywordArray=searchText.split(';');  
         countWords.query.terms.text= keywordArray;
         significantWords.query.terms.text= keywordArray; 
+        query.query.terms.text= keywordArray;  
         //console.log(countWords);
         document.getElementById("textInput").value="";
         document.getElementById("currentTerms").innerHTML=keywordArray;
@@ -833,6 +834,9 @@
         
         var query = {
         size: 10,
+        "query": {
+                 "terms" : { "text" : ["amazing","love"]}  
+            },    
         sort: [
           {"created_at" : {"order" : "desc"}}
        ]
@@ -842,6 +846,8 @@
             "query": {
                  "terms" : { "text" : ["amazing","love"]}  
             },
+            
+            size: 10,
             "aggs": {
                 "TopWords": {
                     "terms": {
@@ -874,10 +880,12 @@
         function liveData(error, data) {
             
             //console.log(data.hits.hits);
-   
+        
            var changes = d3.select("#contents")
                 .selectAll("li")
                 .data(data.hits.hits, function(d) { return d._id});
+            
+            changes.selectAll("*").remove();
            
            changes.enter()
                 .append("li")
