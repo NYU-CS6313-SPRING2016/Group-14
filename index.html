@@ -112,6 +112,7 @@
         <label>Search Terms: </label>
             <input type="text" id="textInput"/>
             <button type="button" onclick="startSearch();">Twitterify</button>
+            <button type="button" onclick="resetSearch();">New Search</button>    
         <label>Add terms seperated by semicolon (;) </label>
         <label>Current Terms: </label>
         <label id="currentTerms"></label>
@@ -814,17 +815,84 @@
     "zero"];
     </script>
     
+    
     <script>
+    
+    function resetSearch() {
+     
+        clearInterval(interval);
+        
+        d3.select("#contents").selectAll("*").remove();
+        d3.select("#bars1").selectAll("*").remove();
+        d3.select("#bars2").selectAll("*").remove();
+        
+        countWords.query.terms.text=[];
+        significantWords.query.terms.text=[]; 
+        query.query.terms.text=[];
+                
+        console.log(countWords);
+        
+        
+    }
+    
+    
+    </script>
+    
+    
+    
+    <script>
+        
+        var interval;
+        
+        
         function startSearch() {
         //console.log(countWords);
+            clearInterval(interval);
         var searchText=document.getElementById("textInput").value;
         var keywordArray=searchText.split(';');  
-        countWords.query.terms.text= keywordArray;
-        significantWords.query.terms.text= keywordArray; 
-        query.query.terms.text= keywordArray;  
+            
+            for (i =0; i<keywordArray.length; i++){
+        countWords.query.terms.text.push(keywordArray[i]);
+        significantWords.query.terms.text.push(keywordArray[i]); 
+        query.query.terms.text.push(keywordArray[i]);
+                
+                }
         //console.log(countWords);
         document.getElementById("textInput").value="";
-        document.getElementById("currentTerms").innerHTML=keywordArray;
+        document.getElementById("currentTerms").innerHTML=query.query.terms.text;
+            
+         
+         d3.json("http://vgc.poly.edu/projects/es-gateway/twitter/_search")
+            .header("Content-Type", "application/json")
+            .post(JSON.stringify(query), liveData);
+
+         d3.json("http://vgc.poly.edu/projects/es-gateway/twitter/_search")
+                .header("Content-Type", "application/json")
+                .post(JSON.stringify(countWords), countData);
+
+         d3.json("http://vgc.poly.edu/projects/es-gateway/twitter/_search")
+                .header("Content-Type", "application/json")
+                .post(JSON.stringify(significantWords), significantData);   
+            
+            
+            
+        interval = setInterval(function() {
+            console.log("calling");
+            
+            d3.json("http://vgc.poly.edu/projects/es-gateway/twitter/_search")
+            .header("Content-Type", "application/json")
+            .post(JSON.stringify(query), liveData);
+
+            d3.json("http://vgc.poly.edu/projects/es-gateway/twitter/_search")
+                .header("Content-Type", "application/json")
+                .post(JSON.stringify(countWords), countData);
+
+            d3.json("http://vgc.poly.edu/projects/es-gateway/twitter/_search")
+                .header("Content-Type", "application/json")
+                .post(JSON.stringify(significantWords), significantData);
+            }, 10000)    
+            
+            
             
     }
     </script>
@@ -835,7 +903,7 @@
         var query = {
         size: 10,
         "query": {
-                 "terms" : { "text" : ["amazing","love"]}  
+                 "terms" : { "text" : []}  
             },    
         sort: [
           {"created_at" : {"order" : "desc"}}
@@ -844,7 +912,7 @@
     
         var countWords = {
             "query": {
-                 "terms" : { "text" : ["amazing","love"]}  
+                 "terms" : { "text" : []}  
             },
             
             size: 10,
@@ -862,7 +930,7 @@
 
         var significantWords = {
             "query": {
-                 "terms" : { "text" : ["amazing","love"]}  
+                 "terms" : { "text" : []}  
             },
             "aggs": {
                 "TopWords": {
@@ -881,11 +949,12 @@
             
             //console.log(data.hits.hits);
         
+            d3.select("#contents").selectAll("*").remove();
            var changes = d3.select("#contents")
                 .selectAll("li")
                 .data(data.hits.hits, function(d) { return d._id});
             
-            changes.selectAll("*").remove();
+            
            
            changes.enter()
                 .append("li")
@@ -902,8 +971,10 @@
         
         
         function countData(error, data) {
-            //console.log(countWords);
+            console.log(countWords);
             //console.log(data.aggregations.TopWords.buckets);
+            
+            d3.select("#bars1").selectAll("*").remove();
             
             var data2=data.aggregations.TopWords.buckets;
             //console.log(data2[0].doc_count);
@@ -925,7 +996,7 @@
             
             //console.log(x)
             
-            chart.selectAll("*").remove();
+          
             var bar_graph=chart.selectAll("rect")
             .data(data2,function(d) { return d.key});
             
@@ -967,6 +1038,8 @@
         function significantData(error, data) {
             //console.log(data.aggregations.TopWords.buckets);
             
+            d3.select("#bars2").selectAll("*").remove();
+            
             var data2=data.aggregations.TopWords.buckets;
             //console.log(data2[0].doc_count);
             
@@ -986,8 +1059,7 @@
             
             
             //console.log(x)
-            
-            chart.selectAll("*").remove();
+       
             var bar_graph=chart.selectAll("rect")
             .data(data2,function(d) { return d.key});
             
@@ -1021,22 +1093,8 @@
             bar_graph.exit().remove();
         }
 
-        var interval = setInterval(function() {
-            console.log("calling");
-            
-            d3.json("http://vgc.poly.edu/projects/es-gateway/twitter/_search")
-            .header("Content-Type", "application/json")
-            .post(JSON.stringify(query), liveData);
-
-            d3.json("http://vgc.poly.edu/projects/es-gateway/twitter/_search")
-                .header("Content-Type", "application/json")
-                .post(JSON.stringify(countWords), countData);
-
-            d3.json("http://vgc.poly.edu/projects/es-gateway/twitter/_search")
-                .header("Content-Type", "application/json")
-                .post(JSON.stringify(significantWords), significantData);
-            }, 10000)
-        console.log(interval);
+        
+        //console.log(interval);
         
         
     </script>
