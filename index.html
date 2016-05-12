@@ -164,6 +164,18 @@
         
         
     }
+        
+        
+        
+        var first_interval = setInterval(function() {
+            console.log("calling");
+            
+            d3.json("http://vgc.poly.edu/projects/es-gateway/twitter/_search")
+            .header("Content-Type", "application/json")
+            .post(JSON.stringify(query2), liveData);
+
+            }, 10000)
+        
     
     
     </script>
@@ -178,6 +190,7 @@
         function startSearch() {
         //console.log(countWords);
             clearInterval(interval);
+            clearInterval(first_interval);
         var searchText=document.getElementById("textInput").value;
         var keywordArray=searchText.split(';');  
             
@@ -236,7 +249,14 @@
                  "terms" : { "text" : []}  
             },    
         sort: [
-          {"created_at" : {"order" : "desc"}}
+          {"@timestamp" : {"order" : "desc"}}
+       ]
+    }
+        
+        var query2 = {
+        size: 10,    
+        sort: [
+          {"@timestamp" : {"order" : "desc"}}
        ]
     }
     
