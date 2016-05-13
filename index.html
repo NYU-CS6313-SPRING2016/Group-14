@@ -139,8 +139,9 @@
         <label>Search Terms: </label>
             <input type="text" id="textInput"/>
             <button type="button" onclick="startSearch();">Add/Twitterify</button>
-            <button type="button" onclick="resetSearch();">New Search</button>    
+            <button type="button" onclick="resetSearch();">New Search</button>
         <label>Add terms seperated by semicolon (;) </label>
+        <button type="button" onclick="exportData();">Export Keywords</button> 
         
         <label id="currentTerms"></label>
         
@@ -170,6 +171,7 @@
     
     
     <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+    <script src="http://alasql.org/console/alasql.min.js"></script>
     
     <script src="stopWords.js"></script>
     
@@ -232,7 +234,7 @@
     //Append the element in page (in span).
     foo.appendChild(element);
  
-}
+    }
       
       function removeButton(node) {
           var foo = document.getElementById("current_terms");
@@ -246,6 +248,14 @@
           query.query.terms.text.splice(indx,1);
           
           renderAll();
+          
+      }
+      
+      
+      function exportData(){
+          
+         alasql("SELECT * INTO CSV('keywords.csv') FROM ?",[[query.query.terms.text]]);   
+          
           
       }
       
