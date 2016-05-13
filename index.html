@@ -45,22 +45,46 @@
             
             #main_div{  
                width: 1500px; 
-              height: 710px; 
+              height: 760px; 
               border:1px solid black;
                 overflow:auto;
+            }
+            
+            
+            #current_terms{  
+               width: 1495px; 
+              height: 40px; 
+              border:1px solid black;
+                overflow:auto;
+                float:top;
+            }
+            
+            
+            
+            #current_terms input {
+                background-color: #4CAF50;
+                border: none;
+                color: white;
+                padding: 5px 5px;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                font-size: 14px;
+                margin: 4px 2px;
+                cursor: pointer;
             }
             
             #live_tweets{
               float: left;  
                width: 300px; 
-              height: 700px; 
+              height: 710px; 
               border:1px solid black;
                 overflow:auto;
             }
             
             #contents{  
-              width: 270px; 
-              height: 650px;
+              width: 290px; 
+              height: 640px;
                 overflow:auto;
                 padding-left: 5px;
             }
@@ -104,6 +128,9 @@
             }
             
         
+            
+            
+            
         </style>
     </head>
 
@@ -111,14 +138,17 @@
         <h1>Twitter Vocabulary Builder</h1>
         <label>Search Terms: </label>
             <input type="text" id="textInput"/>
-            <button type="button" onclick="startSearch();">Twitterify</button>
+            <button type="button" onclick="startSearch();">Add/Twitterify</button>
             <button type="button" onclick="resetSearch();">New Search</button>    
         <label>Add terms seperated by semicolon (;) </label>
-        <label>Current Terms: </label>
+        
         <label id="currentTerms"></label>
         
         <hr>
         <div id="main_div">
+            <div id="current_terms" >
+            <label>Current Terms: </label>
+            </div>
             <div id="live_tweets">
                <h2>Live Tweets</h2> 
             <div id="contents" ></div>
@@ -160,7 +190,7 @@
         significantWords.query.terms.text=[]; 
         query.query.terms.text=[];
                 
-        console.log(countWords);
+        //console.log(countWords);
         
         
     }
@@ -168,7 +198,7 @@
         
         
         var first_interval = setInterval(function() {
-            console.log("calling");
+            //console.log("calling");
             
             d3.json("http://vgc.poly.edu/projects/es-gateway/twitter/_search")
             .header("Content-Type", "application/json")
@@ -180,7 +210,50 @@
     
     </script>
     
+  <script>
     
+    function addButton(keyword) {
+     console.log("adding button");
+    //Create an input type dynamically.
+        var kwd= "term";
+    var element = document.createElement("input");
+ 
+    //Assign different attributes to the element.
+    element.setAttribute("type", "button");
+    element.setAttribute("value", keyword);
+    element.setAttribute("id", kwd.concat(keyword));
+    element.setAttribute("onclick","removeButton(this)");
+        console.log(element.id);
+        //element.innnerHTML=keyword;
+ 
+ 
+    var foo = document.getElementById("current_terms");
+ 
+    //Append the element in page (in span).
+    foo.appendChild(element);
+ 
+}
+      
+      function removeButton(node) {
+          var foo = document.getElementById("current_terms");
+          var child= document.getElementById(node.id);
+          foo.removeChild(child);
+          
+          indx=query.query.terms.text.indexOf(node.value);
+          
+          countWords.query.terms.text.splice(indx,1);
+          significantWords.query.terms.text.splice(indx,1);
+          query.query.terms.text.splice(indx,1);
+          
+          renderAll();
+          
+      }
+      
+    
+    
+    
+    
+    </script>  
     
     <script>
         
@@ -192,19 +265,37 @@
             clearInterval(interval);
             clearInterval(first_interval);
         var searchText=document.getElementById("textInput").value;
+            
+        if (searchText!=""){    
         var keywordArray=searchText.split(';');  
             
             for (i =0; i<keywordArray.length; i++){
-        countWords.query.terms.text.push(keywordArray[i]);
-        significantWords.query.terms.text.push(keywordArray[i]); 
-        query.query.terms.text.push(keywordArray[i]);
+                
+                if (keywordArray[i].trim()!=""){
+                    
+                    countWords.query.terms.text.push(keywordArray[i].trim());
+                    significantWords.query.terms.text.push(keywordArray[i].trim()); 
+                    query.query.terms.text.push(keywordArray[i].trim());
+                    
+                    addButton(keywordArray[i].trim());
+                    
+                }
                 
                 }
         //console.log(countWords);
         document.getElementById("textInput").value="";
-        document.getElementById("currentTerms").innerHTML=query.query.terms.text;
+        
+        
+            renderAll();
             
-         
+        }
+            
+        }
+        
+        function renderAll(){
+        
+            //document.getElementById("currentTerms").innerHTML=query.query.terms.text;
+            
          d3.json("http://vgc.poly.edu/projects/es-gateway/twitter/_search")
             .header("Content-Type", "application/json")
             .post(JSON.stringify(query), liveData);
@@ -220,7 +311,7 @@
             
             
         interval = setInterval(function() {
-            console.log("calling");
+            //console.log("calling");
             
             d3.json("http://vgc.poly.edu/projects/es-gateway/twitter/_search")
             .header("Content-Type", "application/json")
@@ -321,7 +412,7 @@
         
         
         function countData(error, data) {
-            console.log(countWords);
+            //console.log(countWords);
             //console.log(data.aggregations.TopWords.buckets);
             
             d3.select("#bars1").selectAll("*").remove();
@@ -354,7 +445,10 @@
             .attr("x", label_width )
             .attr("y", function(d, i) { return i * height_bar +2; })
             .attr("width", function(d) { return x(d.doc_count); })
-            .attr("height", height_bar);
+            .attr("height", height_bar)
+            .on("mouseover",function(d, i) {  highlight (d.key) })
+            .on("mouseleave", function(d, i) {unHighlight (d.key)})
+            .on("click", function(d, i) {clickBar(d.key)});
             
             bar_graph.enter().append("text")
             .attr("y", function(d, i) { return (i+1) * height_bar; })
@@ -417,7 +511,10 @@
             .attr("x", label_width )
             .attr("y", function(d, i) { return i * height_bar; })
             .attr("width", function(d) { return x(d.score); })
-            .attr("height", height_bar-2);
+            .attr("height", height_bar-2)
+            .on("mouseover",function(d, i) {highlight (d.key) })
+            .on("mouseleave", function(d, i) {unHighlight (d.key)})
+            .on("click", function(d, i) {clickBar(d.key)});
             
             bar_graph.enter().append("text")
             .attr("y", function(d, i) { return (i+1) * height_bar; })
@@ -445,6 +542,46 @@
 
         
         //console.log(interval);
+        
+        
+        // THIS
+        function highlight(key){
+            //console.log(key);
+            d3.select("#bars1")
+                .selectAll("rect")
+                .style("fill", function(d, i) {
+                    return d.key == key ? "green" : undefined
+                })
+                
+            
+           d3.select("#bars2")
+                .selectAll("rect")
+                .style("fill", function(d, i) {
+                    return d.key == key ? "green" : undefined
+                })
+        }
+
+        function unHighlight () {
+            d3.select("#bars1")
+                .selectAll("rect")
+                .style("fill", undefined );
+                
+            
+           d3.select("#bars2")
+                .selectAll("rect")
+                .style("fill", undefined );
+        }
+// END 
+        
+        function clickBar(key){
+            
+            countWords.query.terms.text.push(key);
+        significantWords.query.terms.text.push(key); 
+        query.query.terms.text.push(key);
+            addButton(key);
+        
+            renderAll();
+        }
         
         
     </script>
