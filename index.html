@@ -192,18 +192,32 @@
             clearInterval(interval);
             clearInterval(first_interval);
         var searchText=document.getElementById("textInput").value;
+            
+        if (searchText!=""){    
         var keywordArray=searchText.split(';');  
             
             for (i =0; i<keywordArray.length; i++){
-        countWords.query.terms.text.push(keywordArray[i]);
-        significantWords.query.terms.text.push(keywordArray[i]); 
-        query.query.terms.text.push(keywordArray[i]);
+                
+                if (keywordArray[i].trim()!=""){
+                
+        countWords.query.terms.text.push(keywordArray[i].trim());
+        significantWords.query.terms.text.push(keywordArray[i].trim()); 
+        query.query.terms.text.push(keywordArray[i].trim());
+                    
+                }
                 
                 }
         //console.log(countWords);
         document.getElementById("textInput").value="";
         document.getElementById("currentTerms").innerHTML=query.query.terms.text;
+        
+            renderAll();
             
+        }
+            
+        }
+        
+        function renderAll(){
          
          d3.json("http://vgc.poly.edu/projects/es-gateway/twitter/_search")
             .header("Content-Type", "application/json")
@@ -355,8 +369,9 @@
             .attr("y", function(d, i) { return i * height_bar +2; })
             .attr("width", function(d) { return x(d.doc_count); })
             .attr("height", height_bar)
-            .on("mouseover",function(d, i) { console.log(d); highlight (d.key) })
-            .on("mouseleave", function(d, i) {unHighlight (d.key)} );
+            .on("mouseover",function(d, i) {  highlight (d.key) })
+            .on("mouseleave", function(d, i) {unHighlight (d.key)})
+            .on("click", function(d, i) {clickBar(d.key)});
             
             bar_graph.enter().append("text")
             .attr("y", function(d, i) { return (i+1) * height_bar; })
@@ -420,8 +435,9 @@
             .attr("y", function(d, i) { return i * height_bar; })
             .attr("width", function(d) { return x(d.score); })
             .attr("height", height_bar-2)
-            .on("mouseover",function(d, i) { console.log(d); highlight (d.key) })
-            .on("mouseleave", function(d, i) {unHighlight (d.key)} );
+            .on("mouseover",function(d, i) {highlight (d.key) })
+            .on("mouseleave", function(d, i) {unHighlight (d.key)})
+            .on("click", function(d, i) {clickBar(d.key)});
             
             bar_graph.enter().append("text")
             .attr("y", function(d, i) { return (i+1) * height_bar; })
@@ -480,7 +496,15 @@
         }
 // END 
         
+        function clickBar(key){
+            
+            countWords.query.terms.text.push(key);
+        significantWords.query.terms.text.push(key); 
+        query.query.terms.text.push(key);
+        document.getElementById("currentTerms").innerHTML=query.query.terms.text;
         
+            renderAll();
+        }
         
         
     </script>
