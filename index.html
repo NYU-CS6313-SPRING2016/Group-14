@@ -46,12 +46,20 @@
             #main_div{  
                width: 1500px; 
               height: 760px; 
+              
+                overflow:auto;
+            }
+            
+            
+            #main_main_div{  
+               width: 1505px; 
+              height: 900px; 
               border:1px solid black;
                 overflow:auto;
             }
             
             
-            #current_terms{  
+            #terms_div{  
                width: 1495px; 
               height: 40px; 
               border:1px solid black;
@@ -60,18 +68,109 @@
             }
             
             
+            #current_terms{  
+               width: 1290px; 
+              height: 40px; 
+                overflow:auto;
+                
+            }
+            
+            #terms_label{  
+               
+                float:left;
+            }
+            
             
             #current_terms input {
-                background-color: #4CAF50;
-                border: none;
-                color: white;
-                padding: 5px 5px;
-                text-align: center;
-                text-decoration: none;
-                display: inline-block;
-                font-size: 14px;
-                margin: 4px 2px;
-                cursor: pointer;
+              font-family: arial;
+              font-weight: bold;
+              color: #FFFFFF !important;
+              font-size: 14px;
+              text-shadow: 1px 1px 0px #7CACDE;
+              box-shadow: 1px 1px 1px #BEE2F9;
+              padding: 4px 8px;
+              -moz-border-radius: 5px;
+              -webkit-border-radius: 5px;
+              border-radius: 5px;
+              border: 2px solid #3A853D;
+              background: #4CAF50;
+              background: linear-gradient(top,  #4CAF50,  #5BD160);
+              background: -ms-linear-gradient(top,  #4CAF50,  #5BD160);
+              background: -webkit-gradient(linear, left top, left bottom, from(#4CAF50), to(#5BD160));
+              background: -moz-linear-gradient(top,  #4CAF50,  #5BD160);
+              margin: 0px 4px;
+            }
+            
+            #current_terms input:hover {
+              color: #306E32 !important;
+              background: #59CC5D;
+              background: linear-gradient(top,  #47A34B,  #63E368);
+              background: -ms-linear-gradient(top,  #47A34B,  #63E368);
+              background: -webkit-gradient(linear, left top, left bottom, from(#47A34B), to(#63E368));
+              background: -moz-linear-gradient(top,  #47A34B,  #63E368);
+                
+            }
+            
+            select{
+                
+                font-size: 16px;
+                margin: 3px 8px;
+                border: 2px solid #3866A3;
+                background: #63B8EE;
+                background: linear-gradient(top,  #63B8EE,  #468CCF);
+                background: -ms-linear-gradient(top,  #63B8EE,  #468CCF);
+                background: -webkit-gradient(linear, left top, left bottom, from(#63B8EE), to(#468CCF));
+                background: -moz-linear-gradient(top,  #63B8EE,  #468CCF);
+                color: #FFFFFF;
+            }
+            
+            option {
+                color: black;
+            }
+            
+            button {
+                  font-family: arial;
+                  font-weight: bold;
+                  color: #FFFFFF !important;
+                  font-size: 14px;
+                  text-shadow: 1px 1px 0px #7CACDE;
+                  box-shadow: 1px 1px 1px #BEE2F9;
+                  padding: 4px 8px;
+                  -moz-border-radius: 10px;
+                  -webkit-border-radius: 10px;
+                  border-radius: 10px;
+                  border: 2px solid #3866A3;
+                  background: #63B8EE;
+                  background: linear-gradient(top,  #63B8EE,  #468CCF);
+                  background: -ms-linear-gradient(top,  #63B8EE,  #468CCF);
+                  background: -webkit-gradient(linear, left top, left bottom, from(#63B8EE), to(#468CCF));
+                  background: -moz-linear-gradient(top,  #63B8EE,  #468CCF);
+                }
+            
+                button:hover {
+                  color: #14396A !important;
+                  background: #468CCF;
+                  background: linear-gradient(top,  #468CCF,  #63B8EE);
+                  background: -ms-linear-gradient(top,  #468CCF,  #63B8EE);
+                  background: -webkit-gradient(linear, left top, left bottom, from(#468CCF), to(#63B8EE));
+                  background: -moz-linear-gradient(top,  #468CCF,  #63B8EE);
+                }
+            
+            #menuForm{
+                
+                float:right;
+            }
+            
+            #search_div{
+                
+                float:left;
+                margin-left: 10px;
+            }
+            
+            #form_div{
+                
+                float:right;
+                width: 400px;
             }
             
             #live_tweets{
@@ -135,20 +234,42 @@
     </head>
 
     <body>
+        <div id="main_main_div">
         <h1>Twitter Vocabulary Builder</h1>
+            
+        <div id="search_div">    
         <label>Search Terms: </label>
             <input type="text" id="textInput"/>
             <button type="button" onclick="startSearch();">Add/Twitterify</button>
-            <button type="button" onclick="resetSearch();">New Search</button>
         <label>Add terms seperated by semicolon (;) </label>
-        <button type="button" onclick="exportData();">Export Keywords</button> 
         
-        <label id="currentTerms"></label>
+        <form id="menuForm">
+          <div class="dropMenuDIV">
+            <select id="dropMenu" onchange="menuChange()">
+              <option value="0">Choose time period </option>
+              <option value="3">Last 3 days</option>
+              <option value=10>Last 1 week</option>
+              <option value="20">Last 2 weeks</option>
+              <option value="100">Last 1 month</option>
+              <option value="200">Last 2 months</option>
+            </select>
+          </div>
+        </form>
+            
+        </div>
         
-        <hr>
+         <div id="form_div">   
+        
+             <button id="reset_button" type="button" onclick="resetSearch();">New Search</button>
+             <button id="export_button" type="button" onclick="exportData();">Export Keywords</button>
+        </div>
+
         <div id="main_div">
-            <div id="current_terms" >
+            <div id="terms_div" >
+                <div id="terms_label" >
             <label>Current Terms: </label>
+            </div>
+                <div id="current_terms" ></div>
             </div>
             <div id="live_tweets">
                <h2>Live Tweets</h2> 
@@ -166,6 +287,7 @@
                 </div>
             </div>    
         
+        </div>
         </div>
     </body>
     
@@ -187,6 +309,7 @@
         d3.select("#contents").selectAll("*").remove();
         d3.select("#bars1").selectAll("*").remove();
         d3.select("#bars2").selectAll("*").remove();
+        d3.select("#current_terms").selectAll("*").remove();
         
         countWords.query.terms.text=[];
         significantWords.query.terms.text=[]; 
@@ -259,7 +382,13 @@
           
       }
       
-    
+       function menuChange(){
+         
+           var menuValue=document.getElementById("dropMenu").value;
+           
+           console.log(menuValue);
+           
+       }
     
     
     
@@ -350,14 +479,15 @@
                  "terms" : { "text" : []}  
             },    
         sort: [
-          {"@timestamp" : {"order" : "desc"}}
+          {"timestamp_ms" : {"order" : "desc"}}
        ]
+            
     }
         
         var query2 = {
         size: 10,    
         sort: [
-          {"@timestamp" : {"order" : "desc"}}
+          {"timestamp_ms" : {"order" : "desc"}}
        ]
     }
     
@@ -398,7 +528,7 @@
         
         function liveData(error, data) {
             
-            //console.log(data.hits.hits);
+            //console.log(data);
         
             d3.select("#contents").selectAll("*").remove();
            var changes = d3.select("#contents")
