@@ -306,6 +306,7 @@
      
         clearInterval(interval);
         
+        
         d3.select("#contents").selectAll("*").remove();
         d3.select("#bars1").selectAll("*").remove();
         d3.select("#bars2").selectAll("*").remove();
@@ -370,7 +371,23 @@
           significantWords.query.terms.text.splice(indx,1);
           query.query.terms.text.splice(indx,1);
           
-          renderAll();
+          
+          var len = foo.getElementsByTagName('*').length
+          
+          clearInterval(interval);
+          
+          if (len>0){
+              
+              renderAll();
+              console.log("0 elements")
+          } 
+          
+          else{
+              
+              resetSearch();
+          }
+
+          
           
       }
       
@@ -397,6 +414,7 @@
     <script>
         
         var interval;
+        var first_interval;
         
         
         function startSearch() {
