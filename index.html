@@ -59,7 +59,7 @@
             }
             
             
-            #current_terms{  
+            #terms_div{  
                width: 1495px; 
               height: 40px; 
               border:1px solid black;
@@ -67,6 +67,18 @@
                 float:top;
             }
             
+            
+            #current_terms{  
+               width: 1290px; 
+              height: 40px; 
+                overflow:auto;
+                
+            }
+            
+            #terms_label{  
+               
+                float:left;
+            }
             
             
             #current_terms input {
@@ -253,8 +265,11 @@
         </div>
 
         <div id="main_div">
-            <div id="current_terms" >
+            <div id="terms_div" >
+                <div id="terms_label" >
             <label>Current Terms: </label>
+            </div>
+                <div id="current_terms" ></div>
             </div>
             <div id="live_tweets">
                <h2>Live Tweets</h2> 
@@ -294,6 +309,7 @@
         d3.select("#contents").selectAll("*").remove();
         d3.select("#bars1").selectAll("*").remove();
         d3.select("#bars2").selectAll("*").remove();
+        d3.select("#current_terms").selectAll("*").remove();
         
         countWords.query.terms.text=[];
         significantWords.query.terms.text=[]; 
@@ -463,14 +479,15 @@
                  "terms" : { "text" : []}  
             },    
         sort: [
-          {"@timestamp" : {"order" : "desc"}}
+          {"timestamp_ms" : {"order" : "desc"}}
        ]
+            
     }
         
         var query2 = {
         size: 10,    
         sort: [
-          {"@timestamp" : {"order" : "desc"}}
+          {"timestamp_ms" : {"order" : "desc"}}
        ]
     }
     
@@ -511,7 +528,7 @@
         
         function liveData(error, data) {
             
-            //console.log(data.hits.hits);
+            //console.log(data);
         
             d3.select("#contents").selectAll("*").remove();
            var changes = d3.select("#contents")
