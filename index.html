@@ -243,7 +243,23 @@
             }
             
         
+            #toggle_div{
+                
+                float:right;
+                width: 350px;
+            }
             
+            #sig_div{
+                float:top;
+            }
+            
+            #sig_lab{
+                float: left;
+            }
+            
+            h4{
+                display: inline-block;
+            }
             
             
         </style>
@@ -286,6 +302,8 @@
             <label>Current Terms: </label>
             </div>
                 <div id="current_terms" ></div>
+                
+                
             </div>
             <div id="live_tweets">
                <h2>Live Tweets</h2> 
@@ -298,7 +316,19 @@
                 <svg id="bars1"></svg>
                 </div>
                 <div id="bars2_div">
-                    <h2>Significance</h2>
+                    <div id="sig_div">
+                    <h2 id="sig_lab">Significance</h2>
+                    <div id="toggle_div">
+                
+                <h4>ON/OFF Current Terms Bar: </h4>
+                    
+                    <input type="button" id="toggle_button" value="ON" style="color:blue"
+                           onclick="toggle_func(this);">
+                    
+                    
+                </div>
+                        </div>
+                    
                 <svg id="bars2"></svg>
                 </div>
             </div>    
@@ -424,7 +454,17 @@
            
        }
     
-    
+    function toggle_func(button){
+        
+        currentvalue = document.getElementById('toggle_button').value;
+          if(currentvalue == "OFF"){
+            document.getElementById("toggle_button").value="ON";
+          }else{
+            document.getElementById("toggle_button").value="OFF";
+          }
+        
+        renderAll();
+    }
     
     </script>  
     
