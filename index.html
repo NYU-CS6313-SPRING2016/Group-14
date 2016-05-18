@@ -243,7 +243,23 @@
             }
             
         
+            #toggle_div{
+                
+                float:right;
+                width: 350px;
+            }
             
+            #sig_div{
+                float:top;
+            }
+            
+            #sig_lab{
+                float: left;
+            }
+            
+            h4{
+                display: inline-block;
+            }
             
             
         </style>
@@ -286,6 +302,8 @@
             <label>Current Terms: </label>
             </div>
                 <div id="current_terms" ></div>
+                
+                
             </div>
             <div id="live_tweets">
                <h2>Live Tweets</h2> 
@@ -298,7 +316,19 @@
                 <svg id="bars1"></svg>
                 </div>
                 <div id="bars2_div">
-                    <h2>Significance</h2>
+                    <div id="sig_div">
+                    <h2 id="sig_lab">Significance</h2>
+                    <div id="toggle_div">
+                
+                <h4>Current Terms Bars: </h4>
+                    
+                    <input type="button" id="toggle_button" value="ON" style="color:blue"
+                           onclick="toggle_func(this);">
+                    
+                    
+                </div>
+                        </div>
+                    
                 <svg id="bars2"></svg>
                 </div>
             </div>    
@@ -424,7 +454,17 @@
            
        }
     
-    
+    function toggle_func(button){
+        
+        currentvalue = document.getElementById('toggle_button').value;
+          if(currentvalue == "OFF"){
+            document.getElementById("toggle_button").value="ON";
+          }else{
+            document.getElementById("toggle_button").value="OFF";
+          }
+        
+        renderAll();
+    }
     
     </script>  
     
@@ -608,7 +648,30 @@
             
                     var data2=data.aggregations.TopWords.buckets;
                     //console.log(data2[0].doc_count);
-
+                    
+                
+                
+                    var cv = document.getElementById('toggle_button').value;
+                  
+                    if(cv == "OFF"){
+                        
+                        data2=data2.filter(function(d) { 
+                            
+                            var z=0;
+                            for(i=0; i<query.query.terms.text.length; i++){
+                                
+                                
+                                if (d.key == query.query.terms.text[i]){z=z+1;}
+                                
+                                }
+                        
+                            return z==0
+                        });
+                        
+                      }
+                
+                
+                
                     svg_width=550;
                     svg_height=760/50*data.aggregations.TopWords.buckets.length;
                     height_bar=svg_height/data2.length;
@@ -647,7 +710,7 @@
                     .attr("text-anchor", "start") // text-align: right
                     .text(function(d) { return d.doc_count; })
                     .style("fill", "#000000")
-                    .style("font-size","10px");
+                    .style("font-size","12px");
 
 
                     bar_graph.enter().append("text")
@@ -679,7 +742,29 @@
             
                     var data2=data.aggregations.TopWords.buckets;
                     //console.log(data2[0].doc_count);
-
+                    
+                
+                    var cv = document.getElementById('toggle_button').value;
+                  
+                    if(cv == "OFF"){
+                        
+                        data2=data2.filter(function(d) { 
+                            
+                            var z=0;
+                            for(i=0; i<query.query.terms.text.length; i++){
+                                
+                                
+                                if (d.key == query.query.terms.text[i]){z=z+1;}
+                                
+                                }
+                        
+                            return z==0
+                        });
+                        
+                      }
+                
+                
+                
                     svg_width=550;
                     svg_height=760/50*data.aggregations.TopWords.buckets.length;
                     height_bar=svg_height/data2.length;
@@ -717,7 +802,7 @@
                     .attr("text-anchor", "start") // text-align: right
                     .text(function(d) { return d3.round(d.score,4); })
                     .style("fill", "#000000")
-                    .style("font-size","10px");
+                    .style("font-size","12px");
 
 
                     bar_graph.enter().append("text")
