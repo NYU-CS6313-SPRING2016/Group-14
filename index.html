@@ -2,272 +2,16 @@
 
     <head>
         <title>Twitter Vocabulary Builder</title>
-        <style>
-            
-            body {
-                margin: 0px;
-            }
-            h1{ 
-                color: white;
-                background-color: #000;
-                padding-left: 10px;
-                padding-top: 10px;
-                font-family: sans-serif;
-            }
-            h2 {
-              color: black;  
-                font-weight: bold;
-                font-family: sans-serif;
-                padding-top: 0px;
-                padding-left: 10px;
-            }
-           
-            ul {
-               list-style: none;
-                font-family: sans-serif;
-                font-weight: 500;
-                padding-left: 0px;
-                
-            }
-            
-            ul li:hover{
-                list-style: none;
-                background-color: #ccc;
-                
-            }
-            
-            li{
-                list-style: none;
-                font-family: Arial;
-                
-                
-            }
-            
-            #main_div{  
-               width: 1500px; 
-              height: 760px; 
-              
-                overflow:auto;
-            }
-            
-            
-            #main_main_div{  
-               width: 1505px; 
-              height: 900px; 
-              border:1px solid black;
-                overflow:auto;
-            }
-            
-            
-            #terms_div{  
-               width: 1495px; 
-              height: 40px; 
-              border:1px solid black;
-                overflow:auto;
-                float:top;
-            }
-            
-            
-            #current_terms{  
-               width: 1290px; 
-              height: 40px; 
-                overflow:auto;
-                
-            }
-            
-            #terms_label{  
-               
-                float:left;
-            }
-            
-            
-            #current_terms input {
-              font-family: arial;
-              font-weight: bold;
-              color: #FFFFFF !important;
-              font-size: 14px;
-              text-shadow: 1px 1px 0px #7CACDE;
-              box-shadow: 1px 1px 1px #BEE2F9;
-              padding: 4px 8px;
-              -moz-border-radius: 5px;
-              -webkit-border-radius: 5px;
-              border-radius: 5px;
-              border: 2px solid #3A853D;
-              background: #4CAF50;
-              background: linear-gradient(top,  #4CAF50,  #5BD160);
-              background: -ms-linear-gradient(top,  #4CAF50,  #5BD160);
-              background: -webkit-gradient(linear, left top, left bottom, from(#4CAF50), to(#5BD160));
-              background: -moz-linear-gradient(top,  #4CAF50,  #5BD160);
-              margin: 0px 4px;
-            }
-            
-            #current_terms input:hover {
-              color: #306E32 !important;
-              background: #59CC5D;
-              background: linear-gradient(top,  #47A34B,  #63E368);
-              background: -ms-linear-gradient(top,  #47A34B,  #63E368);
-              background: -webkit-gradient(linear, left top, left bottom, from(#47A34B), to(#63E368));
-              background: -moz-linear-gradient(top,  #47A34B,  #63E368);
-                
-            }
-            
-            select{
-                
-                font-size: 16px;
-                margin: 3px 8px;
-                border: 2px solid #3866A3;
-                background: #63B8EE;
-                background: linear-gradient(top,  #63B8EE,  #468CCF);
-                background: -ms-linear-gradient(top,  #63B8EE,  #468CCF);
-                background: -webkit-gradient(linear, left top, left bottom, from(#63B8EE), to(#468CCF));
-                background: -moz-linear-gradient(top,  #63B8EE,  #468CCF);
-                color: #FFFFFF;
-            }
-            
-            option {
-                color: black;
-            }
-            
-            button {
-                  font-family: arial;
-                  font-weight: bold;
-                  color: #FFFFFF !important;
-                  font-size: 14px;
-                  text-shadow: 1px 1px 0px #7CACDE;
-                  box-shadow: 1px 1px 1px #BEE2F9;
-                  padding: 4px 8px;
-                  -moz-border-radius: 10px;
-                  -webkit-border-radius: 10px;
-                  border-radius: 10px;
-                  border: 2px solid #3866A3;
-                  background: #63B8EE;
-                  background: linear-gradient(top,  #63B8EE,  #468CCF);
-                  background: -ms-linear-gradient(top,  #63B8EE,  #468CCF);
-                  background: -webkit-gradient(linear, left top, left bottom, from(#63B8EE), to(#468CCF));
-                  background: -moz-linear-gradient(top,  #63B8EE,  #468CCF);
-                }
-            
-                button:hover {
-                  color: #14396A !important;
-                  background: #468CCF;
-                  background: linear-gradient(top,  #468CCF,  #63B8EE);
-                  background: -ms-linear-gradient(top,  #468CCF,  #63B8EE);
-                  background: -webkit-gradient(linear, left top, left bottom, from(#468CCF), to(#63B8EE));
-                  background: -moz-linear-gradient(top,  #468CCF,  #63B8EE);
-                }
-            
-            #menuForm{
-                
-                float:right;
-            }
-            
-            #search_div{
-                
-                float:left;
-                margin-left: 10px;
-            }
-            
-            #form_div{
-                
-                float:right;
-                width: 400px;
-            }
-            
-            #live_tweets{
-              float: left;  
-               width: 250px; 
-              height: 710px; 
-              border:1px solid black;
-                overflow:auto;
-            }
-            
-            #contents{  
-              width: 240px; 
-              height: 640px;
-                overflow:auto;
-                padding-left: 5px;
-                font-size: 12px;
-            }
-            
-            #bars{
-              float: right;
-              width: 1245px; 
-              height: 710px;
-                
-                
-            }
-            
-            #bars1{
-                margin-top: 20px;  
-                margin-right: 20px;  
-                margin-bottom: 20px;  
-                margin-left: 20px;
-                width: 560px; 
-             
-                overflow:auto;
-                
-            }
-            
-            #bars2{
-                margin-top: 20px;  
-                margin-right: 20px;  
-                margin-bottom: 20px;  
-                margin-left: 20px;
-                width: 560px; 
-                
-                overflow:auto;
-            }
-            
-            #bars1_div{
-              float: left;
-                width: 620px; 
-              height: 710px;
-                overflow:auto;
-                
-            }
-            
-            #bars2_div{
-              float: right;
-                width: 620px; 
-              height: 710px;
-                overflow:auto;
-                
-            }
-            
-            
-            
-            #bars rect {
-                fill: steelblue;
-                box-shadow: 2px 2px 2px #666;
-                
-            }
-            
-        
-            #toggle_div{
-                
-                float:right;
-                width: 350px;
-            }
-            
-            #sig_div{
-                float:top;
-            }
-            
-            #sig_lab{
-                float: left;
-            }
-            
-            h4{
-                display: inline-block;
-            }
-            
-            
-        </style>
+        <link rel="stylesheet" type="text/css" href="style.css">
     </head>
 
     <body>
         <div id="main_main_div">
-        <h1>Twitter Vocabulary Builder</h1>
+        <h1><img src="logo.svg" width="3%" height="3%"> Twitter Vocabulary Builder</h1>
+        <div>
+          <p id="directions"><strong class="blue">Directions: </strong>
+            (1) Enter keyword(s) into the search field and select a time period (2) Click "Add/Twitterify" (3) You can add more keywords by clicking on the bars or entering them manually (4) You can click on the keywords in the current terms box to remove from your search (4) Toggle the current terms on or off to hide the current terms in the charts (5) You can export your search terms by clicking the export keywords button</p>
+        </div>
             
         <div id="search_div">    
         <label>Search Terms: </label>
@@ -320,7 +64,7 @@
                     <h2 id="sig_lab">Significance</h2>
                     <div id="toggle_div">
                 
-                <h4>Current Terms Bars: </h4>
+                <h4 id="switch_text">Include Current Terms in Bars: </h4>
                     
                     <input type="button" id="toggle_button" value="ON" style="color:blue"
                            onclick="toggle_func(this);">
@@ -676,21 +420,31 @@
                     
                  
                          changes.enter()
-                           .append("li")
-                       .text(function(d) {return d._source.created_at})
-                       .append("li")
-                         .on("click", function (d, i){
-                           window.open("https://twitter.com/" + d._source.user.screen_name + "/status/" + d._source.id_str, "_blank")})
-                                .append("li")
-                                .text(function(d) {return d._source.text});
-                            // .on("mouseenter",function(d, i) { highlight(d.name);})
-                            // .on("mouseleave",function(d, i) { unHighlight();})
-                            //.style("color", "red")
-                            //.style({
-                            //  "background-color": "#ccc",
-                            //    border: "solid 1px #000"
-                            //}).attr("class", "item") 
-                             changes.exit().remove();
+                .append("li")
+                .text(function(d) {return d._source.created_at})
+                  .style("color", "grey")
+                  .style("font-weight", "100")
+                .append("li")
+                  .on("click", function (d, i){
+                    window.open("https://twitter.com/" + d._source.user.screen_name + "/status/" + d._source.id_str, "_blank")})
+                .append("li")
+                  .style("color", "grey")
+                  .style("font-weight", "100")
+                .append("li")
+                .text(function(d) {return d._source.text})
+                  .style("color", "black")
+                  .on("mouseover", function() {
+                      d3.select(this)
+                        .style('color', '#55acee')
+                        .style('cursor', 'pointer')
+                    })
+                    .on("mouseout",  function() {
+                      d3.select(this)
+                      .style('color', 'black')})
+                  .append("li")
+                    .html("<br/>");
+                 
+                    changes.exit().remove();
 
              }
         }
@@ -895,26 +649,26 @@
             d3.select("#bars1")
                 .selectAll("rect")
                 .style("fill", function(d, i) {
-                    return d.key == key ? "green" : undefined
+                    return d.key == key ? "#92c472" : "#55acee"
                 })
                 
             
            d3.select("#bars2")
                 .selectAll("rect")
                 .style("fill", function(d, i) {
-                    return d.key == key ? "green" : undefined
+                    return d.key == key ? "#92c472" : "#55acee"
                 })
         }
 
         function unHighlight () {
             d3.select("#bars1")
                 .selectAll("rect")
-                .style("fill", undefined );
+                .style("fill", "#55acee" );
                 
             
            d3.select("#bars2")
                 .selectAll("rect")
-                .style("fill", undefined );
+                .style("fill", "#55acee" );
         }
 // END 
         
