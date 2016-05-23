@@ -9,14 +9,14 @@ Hovsep Agop
 [hka245@nyu.edu, hka245]
 
 
-<h3>Project page (on Github):
-https://github.com/NYU-CS6313-SPRING2016/Group-14 </h3>
+<h4>Project page (on Github):
+https://github.com/NYU-CS6313-SPRING2016/Group-14 </h4>
 
-<h3>Video:
-https://vimeo.com/167374057 </h1>
+<h4>Video:
+https://vimeo.com/167374057 </h4>
 
-<h3>Working demo:
-http://nyu-cs6313-spring2016.github.io/Group-14/ </h3>
+<h4>Working demo:
+http://nyu-cs6313-spring2016.github.io/Group-14/ </h4>
 
 
 <h2>Problem Statement</h2>
